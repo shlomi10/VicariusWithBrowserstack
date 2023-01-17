@@ -4,7 +4,7 @@ Selenium test automation framework with Page Object Model design using Java + Ma
 Technologies/Tools used in building the framework
 =================================================
 - Intellij - IDE
-- Java 11 - Programming language
+- Java 17 - Programming language
 - TestNG - Test Management library
 - Maven - Build automation tool
 - Extent Reports - Reporting framework
