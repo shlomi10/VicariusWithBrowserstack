@@ -45,7 +45,7 @@ public class MainRunnerTest extends BaseTest {
     public void openSignInPageTest() {
         mainPage.getMainPage(siteURL);
         Assert.assertTrue(mainPage.getLoginPage(), "Site was not loaded");
-        Assert.assertTrue(signInPage.validatePage(), "Login page was not open");
+        Assert.assertTrue(signInPage.validateLoginPage(), "Login page was not open");
     }
 
     @Test(priority = 2, groups = "login page", description = "Sign in with invalid Mail and validate pop up appear")
@@ -74,163 +74,138 @@ public class MainRunnerTest extends BaseTest {
         // this test is meant to be failed since there is no forgot email page the user is moving to
     }
 
-    @Test(priority = 6, groups = "signup page", description = "Validate forgot email link")
-    public void navigateToSignUpPageTest() {
-        signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
-        Assert.assertTrue(signUpPage.validateContinueButtonAppear(), "user was not moved to sign up page");
-    }
-
-    @Test(priority = 7, groups = "signup page", description = "Sign up with valid data and validate pop up appear")
+    @Test(priority = 6, groups = "signup page", description = "Sign up with valid data and validate pop up appear")
     public void positiveSignUpPopUpTest() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
         signUpPage.fillPositiveDetails();
         signUpPage.clickStartFreeTrial();
         Assert.assertTrue(signUpPage.validateHooray(), "No hooray pop up appeared");
     }
 
-    @Test(priority = 8, groups = "signup page", description = "Validate positive registration")
+    @Test(priority = 7, groups = "signup page", description = "Validate positive registration")
     public void positiveSignUpTest() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
         signUpPage.fillPositiveDetails();
         signUpPage.clickStartFreeTrial();
         Assert.assertTrue(signUpPage.validateHoorayText(), "No text was at the hooray text box");
     }
 
-    @Test(priority = 9, groups = "signup page", description = "Validate negative registration missing first name")
+    @Test(priority = 8, groups = "signup page", description = "Validate negative registration missing first name")
     public void negativeSignUpTestMissingFirstName() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
         signUpPage.fillPositiveDetailsWithoutField("firstName");
-        signUpPage.clickStartFreeTrial();
         Assert.assertTrue(signUpPage.getErrorFromField(), "No error at missing field appeared");
     }
 
-    @Test(priority = 10, groups = "signup page", description = "Validate negative registration missing last name")
+    @Test(priority = 9, groups = "signup page", description = "Validate negative registration missing last name")
     public void negativeSignUpTestMissingLastName() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
         signUpPage.fillPositiveDetailsWithoutField("lastName");
         signUpPage.clickStartFreeTrial();
         Assert.assertTrue(signUpPage.getErrorFromField(), "No error at missing field appeared");
     }
 
-    @Test(priority = 11, groups = "signup page", description = "Validate negative registration missing email")
+    @Test(priority = 10, groups = "signup page", description = "Validate negative registration missing email")
     public void negativeSignUpTestMissingEmail() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
         signUpPage.fillPositiveDetailsWithoutField("email");
-        signUpPage.clickStartFreeTrial();
+        signUpPage.clickContinue();
         Assert.assertTrue(signUpPage.getErrorFromField(), "No error at missing field appeared");
     }
 
-    @Test(priority = 12, groups = "signup page", description = "Validate negative registration missing company")
+    @Test(priority = 11, groups = "signup page", description = "Validate negative registration missing company")
     public void negativeSignUpTestMissingCompany() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
         signUpPage.fillPositiveDetailsWithoutField("company");
-        signUpPage.clickStartFreeTrial();
+        signUpPage.clickContinue();
         Assert.assertTrue(signUpPage.getErrorFromField(), "No error at missing field appeared");
     }
 
-    @Test(priority = 13, groups = "signup page", description = "Validate negative registration missing password")
+    @Test(priority = 12, groups = "signup page", description = "Validate negative registration missing password")
     public void negativeSignUpTestMissingPassword() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
-        signUpPage.fillPositiveDetailsWithoutField("password");
+        signUpPage.fillPositiveDetailsWithoutPasswordField("password");
         signUpPage.clickStartFreeTrial();
         Assert.assertTrue(signUpPage.getErrorFromField(), "No error at missing field appeared");
     }
 
-    @Test(priority = 14, groups = "signup page", description = "Validate negative registration missing confirm password field")
+    @Test(priority = 13, groups = "signup page", description = "Validate negative registration missing confirm password field")
     public void negativeSignUpTestMissingPasswordConfirmationField() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
-        signUpPage.fillPositiveDetailsWithoutField("confirmationPassword");
+        signUpPage.fillPositiveDetailsWithoutPasswordField("confirmationPassword");
         signUpPage.clickStartFreeTrial();
-        Assert.assertTrue(signUpPage.getErrorFromConfirmationPasswordField(), "No error at missing confirmation field appeared");
+        Assert.assertTrue(signUpPage.getErrorFromField(), "No error at missing confirmation field appeared");
     }
 
-    @Test(priority = 15, groups = "signup page", description = "Validate negative registration with invalid email")
+    @Test(priority = 14, groups = "signup page", description = "Validate negative registration with invalid email")
     public void negativeSignUpTestInvalidEmail() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
         signUpPage.fillPositiveDetailsWithoutField("invalidEmail");
-        signUpPage.clickStartFreeTrial();
-        Assert.assertTrue(signUpPage.validateErrorFromEmailField(), "There is no error text at email field");
+        Assert.assertTrue(signUpPage.getErrorFromField(), "There is no error text at email field");
     }
 
-    @Test(priority = 16, groups = "signup page", description = "Validate negative registration with short email")
+    @Test(priority = 15, groups = "signup page", description = "Validate negative registration with short email")
     public void negativeSignUpTestShortEmail() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
         signUpPage.fillPositiveDetailsWithoutField("shortEmail");
-        signUpPage.clickStartFreeTrial();
-        Assert.assertTrue(signUpPage.validateErrorFromEmailField(), "There is no error text at email field");
+        Assert.assertTrue(signUpPage.getErrorFromField(), "There is no error text at email field");
     }
 
-    @Test(priority = 17, groups = "signup page", description = "Validate negative registration with short Password")
+    @Test(priority = 16, groups = "signup page", description = "Validate negative registration with short Password")
     public void negativeSignUpTestShortPassword() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
-        signUpPage.fillPositiveDetailsWithoutField("shortPassword");
+        signUpPage.fillPositiveDetailsWithoutPasswordField("shortPassword");
         signUpPage.clickStartFreeTrial();
         Assert.assertTrue(signUpPage.getErrorField(Constants.expectedLength), "There is no error for short password");
     }
 
-    @Test(priority = 18, groups = "signup page", description = "Validate negative registration without lower case Password")
+    @Test(priority = 17, groups = "signup page", description = "Validate negative registration without lower case Password")
     public void negativeSignUpTestWithoutLowerCasePassword() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
-        signUpPage.fillPositiveDetailsWithoutField("withoutLowerCasePassword");
+        signUpPage.fillPositiveDetailsWithoutPasswordField("withoutLowerCasePassword");
         signUpPage.clickStartFreeTrial();
         Assert.assertTrue(signUpPage.getErrorField(Constants.expectedLowerCase), "There is no error for password without lower case");
     }
 
-    @Test(priority = 19, groups = "signup page", description = "Validate negative registration without upper case Password")
+    @Test(priority = 18, groups = "signup page", description = "Validate negative registration without upper case Password")
     public void negativeSignUpTestWithoutUpperCasePassword() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
-        signUpPage.fillPositiveDetailsWithoutField("withoutUpperCasePassword");
+        signUpPage.fillPositiveDetailsWithoutPasswordField("withoutUpperCasePassword");
         signUpPage.clickStartFreeTrial();
         Assert.assertTrue(signUpPage.getErrorField(Constants.expectedUpperCase), "There is no error for password without upper case");
     }
 
-    @Test(priority = 20, groups = "signup page", description = "Validate negative registration without number Password")
+    @Test(priority = 19, groups = "signup page", description = "Validate negative registration without number Password")
     public void negativeSignUpTestWithoutNumberPassword() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
-        signUpPage.fillPositiveDetailsWithoutField("withoutNumberPassword");
+        signUpPage.fillPositiveDetailsWithoutPasswordField("withoutNumberPassword");
         signUpPage.clickStartFreeTrial();
         Assert.assertTrue(signUpPage.getErrorField(Constants.expectedNumber), "There is no error for password without number");
     }
 
-    @Test(priority = 21, groups = "signup page", description = "Validate negative registration without special character Password")
+    @Test(priority = 20, groups = "signup page", description = "Validate negative registration without special character Password")
     public void negativeSignUpTestWithoutSpecialCharacterPassword() {
         signUpPage.navigateToSignUpPage(signUpURL);
-        signUpPage.validateContinueButtonAppear();
-        signUpPage.fillPositiveDetailsWithoutField("withoutSpecialCharacterPassword");
+        signUpPage.fillPositiveDetailsWithoutPasswordField("withoutSpecialCharacterPassword");
         signUpPage.clickStartFreeTrial();
         Assert.assertTrue(signUpPage.getErrorField(Constants.expectedSpecialChar), "There is no error for password without special character");
     }
 
-    @Test(priority = 22, groups = "product page", description = "Validate sign In page test")
+    @Test(priority = 21, groups = "product page", description = "Validate sign In page test")
     public void openProductPageTest() {
         signUpPage.getProductPage(productURL);
         productPage.clickLogin();
-        Assert.assertTrue(productPage.validateLoginPage(), "Login page was not loaded");
+        Assert.assertTrue(signInPage.validateLoginPage(), "Login page was not loaded");
         productPage.navigateBack();
         Assert.assertTrue(productPage.validateProductPage(), "product page was not open");
     }
 
-    @Test(priority = 23, groups = "product page", description = "Validate description text of Vicarius")
+    @Test(priority = 22, groups = "product page", description = "Validate description text of Vicarius")
     public void validateDescriptionTest() {
         Assert.assertTrue(productPage.validateCompanyDescription(), "description of the company is not right");
     }
 
-    @Test(priority = 24, groups = "product page", description = "Validate links at main page of Vicarius")
+    @Test(priority = 23, groups = "product page", description = "Validate links at main page of Vicarius")
     public void validateLinksTest() {
         Assert.assertTrue(productPage.validateLinksAreNotEmpty(), "there is broken links");
     }

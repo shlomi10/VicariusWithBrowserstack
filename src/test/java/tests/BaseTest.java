@@ -3,8 +3,6 @@ package tests;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.*;
 import org.testng.annotations.*;
@@ -48,20 +46,19 @@ public class BaseTest implements ITestListener {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
             props.load(inputStream);
 
-            if(Boolean.valueOf(props.getProperty("use.selenium.grid"))) {
+            if (Boolean.parseBoolean(props.getProperty("use.selenium.grid"))) {
                 capabilities.setCapability("browserName", props.getProperty("selenium.grid.browser.name"));
                 HashMap<String, Object> browserstackOptions = new HashMap<String, Object>();
                 browserstackOptions.put("os", props.getProperty("selenium.grid.os.name"));
                 browserstackOptions.put("osVersion", props.getProperty("selenium.grid.os.version"));
                 browserstackOptions.put("browserVersion", props.getProperty("selenium.grid.browser.version"));
-                browserstackOptions.put("local", "false");
+                browserstackOptions.put("local", props.getProperty("isRunLocal"));
                 browserstackOptions.put("seleniumVersion", props.getProperty("selenium.grid.seleniumVersion"));
                 capabilities.setCapability("bstack:options", browserstackOptions);
 
                 URL browserStackUrl = new URL("https://" + props.getProperty("browserstack.username") + ":" + props.getProperty("browserstack.accessKey") + props.get("selenium.grid.url"));
                 driver = new RemoteWebDriver((browserStackUrl), capabilities);
-            }
-            else{
+            } else {
                 driver = new ChromeDriver();
             }
 

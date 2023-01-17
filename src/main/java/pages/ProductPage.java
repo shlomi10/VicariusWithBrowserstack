@@ -20,8 +20,6 @@ public class ProductPage extends BasePageFunctions {
     }
 
     By loginLink = By.cssSelector(".link-button.hidden-lg-down");
-    By loginBTN = By.cssSelector(".btn.btn-blue");
-    By emailFieldToWait = By.xpath("//input[@placeholder='Work e-mail']");
     By topiaLogo = By.xpath("//div[@class='title size-lg']");
     By companyDescription = By.cssSelector(".text.pre-line.print-mr");
     By linkElements = By.xpath("//div[@class='link-group'] //a");
@@ -34,12 +32,6 @@ public class ProductPage extends BasePageFunctions {
     // navigate back
     public Boolean navigateBack() {
         return navigateToPreviousPage();
-    }
-
-    // validate we are on the login page
-    public Boolean validateLoginPage() {
-        waitForElementToBeVisible(emailFieldToWait);
-        return getTextFromElement(loginBTN).equalsIgnoreCase("login");
     }
 
     // validate we are on the product page
@@ -67,6 +59,8 @@ public class ProductPage extends BasePageFunctions {
         for (int i = 0; i < actualHrefText.size(); i++) {
             if (!actualHrefText.get(i).equalsIgnoreCase(Constants.expectedLinks.get(i))) {
                 System.out.println("Expected description text is not the same as the actual");
+                System.out.println("Expected description text is : " + Constants.expectedLinks.get(i));
+                System.out.println("Actual description text is : " + actualHrefText.get(i));
                 return false;
             }
         }

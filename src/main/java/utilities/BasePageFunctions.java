@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.checkerframework.checker.units.qual.Time;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -24,7 +23,7 @@ public abstract class BasePageFunctions {
     // constructor
     public BasePageFunctions(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10 ));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     // get webDriver
@@ -76,17 +75,6 @@ public abstract class BasePageFunctions {
     public Boolean waitForElementToBeClickableAndClickIt(By elem) {
         try {
             wait.until(ExpectedConditions.elementToBeClickable(elem)).click();
-            return true;
-        } catch (Exception e) {
-            System.out.println("Wait for element to be clickable was not worked correct");
-            return false;
-        }
-    }
-
-    // element to be clickable
-    public Boolean waitForElementToBeClickable(By elem) {
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(elem));
             return true;
         } catch (Exception e) {
             System.out.println("Wait for element to be clickable was not worked correct");
